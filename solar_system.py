@@ -2,6 +2,7 @@ from program import Program
 import numpy as np
 from OpenGL.GL import *
 from matrix import Matrix
+from sphere import generateSphere
 
 
 class SolarSystem(Program):
@@ -19,13 +20,13 @@ class SolarSystem(Program):
         vao_reference = glGenVertexArrays(1)
         glBindVertexArray(vao_reference)
         
-        positions = [0.0, 0.8, 0.0,
-                    0.8, -0.8, 0.0,
-                    -0.8, -0.8, 0.0]
+        positions = generateSphere()
+        self.draw_count = len(positions)
+        positions = np.array(positions).ravel().astype(np.float32)
         
         vertex_buffer = glGenBuffers(1)
         glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer)
-        glBufferData(GL_ARRAY_BUFFER, np.array(positions, dtype=np.float32), GL_STATIC_DRAW)
+        glBufferData(GL_ARRAY_BUFFER, positions, GL_STATIC_DRAW)
         position_variable_reference = glGetAttribLocation(self.program, 'position')
         glVertexAttribPointer(position_variable_reference, 3, GL_FLOAT, False, 0, None)
         glEnableVertexAttribArray(position_variable_reference)
@@ -39,4 +40,4 @@ class SolarSystem(Program):
 
 
     def update_scene(self):
-        glDrawArrays(GL_TRIANGLES, 0, 3)
+        glDrawArrays(GL_TRIANGLES, 0, self.draw_count)
