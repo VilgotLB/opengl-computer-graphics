@@ -1,6 +1,7 @@
 from program import Program
 import numpy as np
 from OpenGL.GL import *
+from matrix import Matrix
 
 
 class SolarSystem(Program):
@@ -28,6 +29,13 @@ class SolarSystem(Program):
         position_variable_reference = glGetAttribLocation(self.program, 'position')
         glVertexAttribPointer(position_variable_reference, 3, GL_FLOAT, False, 0, None)
         glEnableVertexAttribArray(position_variable_reference)
+
+        projection_matrix = Matrix.makePerspective()
+        view_matrix = Matrix.makeTranslation(0,0,-10)
+        projection_view_matrix = projection_matrix @ view_matrix
+
+        projectionViewMatrix_reference = glGetUniformLocation(self.program, 'projectionViewMatrix')
+        glUniformMatrix4fv(projectionViewMatrix_reference, 1, GL_TRUE, projection_view_matrix)
 
 
     def update_scene(self):
