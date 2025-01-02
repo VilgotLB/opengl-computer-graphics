@@ -47,5 +47,3 @@ def generateSphere(radiusSegments=32, heightSegments=16):
         0, 2*pi, radiusSegments, -pi/2, pi/2, heightSegments, S)
 
     return positions
-
-print(generateSphere()[0])
