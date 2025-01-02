@@ -16,11 +16,12 @@ class SolarSystem(Program):
         super().__init__(self.PROGRAM_NAME, self.VERTEX_SHADER_FILE, self.FRAGMENT_SHADER_FILE)
 
 
-    def initialize_scene(self):
-        vao_reference = glGenVertexArrays(1)
-        glBindVertexArray(vao_reference)
-        
-        self.sun = SceneObject(self.program, 'position', generateSphere())
+    def initialize_scene(self):        
+        self.sun = SceneObject(self.program, 'position', generateSphere(30, 15))
+        self.sun.translate(3, 1, 5)
+
+        self.earth = SceneObject(self.program, 'position', generateSphere(40, 20))
+        self.earth.translate(-3, -3, -1)
 
         projection_matrix = Matrix.makePerspective()
         view_matrix = Matrix.makeTranslation(0,0,-10)
@@ -32,3 +33,4 @@ class SolarSystem(Program):
 
     def update_scene(self):
         self.sun.render()
+        self.earth.render()
