@@ -1,10 +1,13 @@
 import numpy as np
 from OpenGL.GL import *
 from matrix import Matrix
+from scene_entity import SceneEntity
 
-class SceneObject(object):
+class SceneObject(SceneEntity):
 
-    def __init__(self, program_reference, position_variable_name, positions, color_variable_name, colors):
+    def __init__(self, program_reference, model_matrix_uniform, position_variable_name, positions, color_variable_name, colors):
+        super().__init__()
+
         self.number_of_vertices = len(positions)
 
         self.vao = glGenVertexArrays(1)
@@ -13,8 +16,7 @@ class SceneObject(object):
         self.store_vertex_attribute(program_reference, position_variable_name, positions)
         self.store_vertex_attribute(program_reference, color_variable_name, colors)
 
-        self.model_matrix = Matrix.makeIdentity()
-        self.modelMatrix_reference = glGetUniformLocation(program_reference, 'modelMatrix')
+        self.modelMatrix_reference = glGetUniformLocation(program_reference, model_matrix_uniform)
     
 
     def store_vertex_attribute(self, program, variable_name, data):
@@ -27,26 +29,6 @@ class SceneObject(object):
         variable_reference = glGetAttribLocation(program, variable_name)
         glVertexAttribPointer(variable_reference, 3, GL_FLOAT, False, 0, None)
         glEnableVertexAttribArray(variable_reference)
-    
-
-    def translate(self, x, y, z):
-        self.model_matrix = Matrix.makeTranslation(x, y, z) @ self.model_matrix
-    
-
-    def scale(self, scale):
-        self.model_matrix = Matrix.makeScale(scale) @ self.model_matrix
-    
-
-    def rotate_around_x(self, angle):
-        self.model_matrix = Matrix.makeRotationX(angle) @ self.model_matrix
-
-
-    def rotate_around_y(self, angle):
-        self.model_matrix = Matrix.makeRotationY(angle) @ self.model_matrix
-    
-
-    def rotate_around_z(self, angle):
-        self.model_matrix = Matrix.makeRotationZ(angle) @ self.model_matrix
 
 
     def render(self):
