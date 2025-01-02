@@ -4,6 +4,7 @@ from OpenGL.GL import *
 from matrix import Matrix
 from sphere import generateSphere
 from scene_object import SceneObject
+from math import pi
 
 class SolarSystem(Program):
 
@@ -20,13 +21,13 @@ class SolarSystem(Program):
         sphere_positions = generateSphere()
 
         self.sun = SceneObject(self.program, 'position', sphere_positions, 'vertexColor', [1.0, 1.0, 0.0] * len(sphere_positions))
-        self.sun.translate(1, 0, 3)
+        self.sun.scale(3)
 
         self.earth = SceneObject(self.program, 'position', sphere_positions, 'vertexColor', [0.0, 0.0, 1.0] * len(sphere_positions))
-        self.earth.translate(-3, 0, 0)
+        self.earth.translate(-6, 0, 0)
 
         projection_matrix = Matrix.makePerspective()
-        view_matrix = Matrix.makeTranslation(0,0,-10)
+        view_matrix = Matrix.makeRotationX(pi / 4) @ Matrix.makeTranslation(0, -10, -10)
         projection_view_matrix = projection_matrix @ view_matrix
 
         projectionViewMatrix_reference = glGetUniformLocation(self.program, 'projectionViewMatrix')
@@ -39,8 +40,7 @@ class SolarSystem(Program):
     def update_scene(self, dt, time):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        self.sun.translate(0, 0, dt)
         self.sun.render()
 
-        self.earth.translate(0, 0, dt)
+        self.earth.rotate_around_y(dt)
         self.earth.render()
