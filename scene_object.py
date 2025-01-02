@@ -1,6 +1,5 @@
 import numpy as np
 from OpenGL.GL import *
-from matrix import Matrix
 from scene_entity import SceneEntity
 
 class SceneObject(SceneEntity):

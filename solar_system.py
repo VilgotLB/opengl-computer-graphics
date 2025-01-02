@@ -2,7 +2,6 @@ from camera import Camera
 from program import Program
 import numpy as np
 from OpenGL.GL import *
-from matrix import Matrix
 from sphere import generateSphere
 from scene_object import SceneObject
 from math import pi
