@@ -20,10 +20,10 @@ class SolarSystem(Program):
         sphere_positions = generateSphere()
 
         self.sun = SceneObject(self.program, 'position', sphere_positions, 'vertexColor', [1.0, 1.0, 0.0] * len(sphere_positions))
-        self.sun.translate(3, 1, 5)
+        self.sun.translate(1, 0, 3)
 
         self.earth = SceneObject(self.program, 'position', sphere_positions, 'vertexColor', [0.0, 0.0, 1.0] * len(sphere_positions))
-        self.earth.translate(-3, -3, -1)
+        self.earth.translate(-3, 0, 0)
 
         projection_matrix = Matrix.makePerspective()
         view_matrix = Matrix.makeTranslation(0,0,-10)
@@ -32,7 +32,15 @@ class SolarSystem(Program):
         projectionViewMatrix_reference = glGetUniformLocation(self.program, 'projectionViewMatrix')
         glUniformMatrix4fv(projectionViewMatrix_reference, 1, GL_TRUE, projection_view_matrix)
 
+        glEnable(GL_CULL_FACE)
+        glEnable(GL_DEPTH_TEST)
 
-    def update_scene(self):
+
+    def update_scene(self, dt, time):
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+        self.sun.translate(0, 0, dt)
         self.sun.render()
+
+        self.earth.translate(0, 0, dt)
         self.earth.render()

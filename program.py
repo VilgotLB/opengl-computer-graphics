@@ -19,16 +19,19 @@ class Program(ABC):
 
         self.initialize_scene()
 
+        clock = pygame.time.Clock()
+        time = 0
         running = True
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
             
-            self.update_scene()
+            dt = clock.tick(60) / 1000.0
+            time += dt
+            self.update_scene(dt, time)
 
             pygame.display.flip()
-            pygame.time.Clock().tick(60)
 
         pygame.quit()
 
@@ -83,5 +86,5 @@ class Program(ABC):
         pass
 
     @abstractmethod
-    def update_scene(self):
+    def update_scene(self, dt, time):
         pass
