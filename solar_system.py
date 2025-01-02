@@ -16,11 +16,13 @@ class SolarSystem(Program):
         super().__init__(self.PROGRAM_NAME, self.VERTEX_SHADER_FILE, self.FRAGMENT_SHADER_FILE)
 
 
-    def initialize_scene(self):        
-        self.sun = SceneObject(self.program, 'position', generateSphere(30, 15))
+    def initialize_scene(self):
+        sphere_positions = generateSphere()
+
+        self.sun = SceneObject(self.program, 'position', sphere_positions, 'vertexColor', [1.0, 1.0, 0.0] * len(sphere_positions))
         self.sun.translate(3, 1, 5)
 
-        self.earth = SceneObject(self.program, 'position', generateSphere(40, 20))
+        self.earth = SceneObject(self.program, 'position', sphere_positions, 'vertexColor', [0.0, 0.0, 1.0] * len(sphere_positions))
         self.earth.translate(-3, -3, -1)
 
         projection_matrix = Matrix.makePerspective()
