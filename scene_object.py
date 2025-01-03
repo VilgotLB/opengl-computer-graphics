@@ -33,6 +33,6 @@ class SceneObject(SceneEntity):
     def render(self):
         glBindVertexArray(self.vao)
 
-        glUniformMatrix4fv(self.modelMatrix_reference, 1, GL_TRUE, self.model_matrix)
+        glUniformMatrix4fv(self.modelMatrix_reference, 1, GL_TRUE, self.get_world_matrix())
 
         glDrawArrays(GL_TRIANGLES, 0, self.number_of_vertices)

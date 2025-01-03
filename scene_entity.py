@@ -5,6 +5,24 @@ class SceneEntity(object):
 
     def __init__(self):
         self.model_matrix = np.identity(4, dtype=np.float32)
+        self.parent = None
+        self.children = []
+    
+
+    def add_child(self, child):
+        child.parent = self
+        self.children.append(child)
+    
+
+    def remove_child(self, child):
+        child.parent = None
+        self.children.remove(child)
+    
+
+    def get_world_matrix(self):
+        if self.parent == None:
+            return self.model_matrix
+        return self.parent.get_world_matrix() @ self.model_matrix
     
 
     def transform(self, matrix, locally=True):

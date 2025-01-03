@@ -21,14 +21,22 @@ class SolarSystem(Program):
 
     def initialize_scene(self):
         self.sun = CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, [1.0, 1.0, 0.0])
-        self.sun.scale(3)
+        self.planet1 = CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, [0.2, 0.8, 0.5])
+        self.moon = CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, [0.8, 0.3, 0.8])
+        self.sun.add_child(self.planet1)
+        self.planet1.add_child(self.moon)
 
-        self.earth = CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, [0.2, 0.8, 0.5])
-        self.earth.translate(-6, 0, 0)
+        self.sun.scale(2)
+        self.planet1.scale(1/2)
 
+        self.moon.translate(0, 0, 3)
+        self.planet1.translate(-10, 0, 0)
+
+        self.moon.scale(3/4)
+        
         camera = Camera(self.program, self.PROJECTION_VIEW_MATRIX_UNIFORM)
-        camera.rotate_around_x(-pi / 4)
-        camera.translate(0, 10, 10, False)
+        camera.rotate_around_x(-pi / 2)
+        camera.translate(0, 30, 0, False)
         camera.activate()
 
         glEnable(GL_CULL_FACE)
@@ -38,9 +46,9 @@ class SolarSystem(Program):
     def update_scene(self, dt, time):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        self.sun.rotate_around_y(-dt)
-        self.sun.render()
+        self.planet1.rotate_around_y(dt * pi, False)
+        self.moon.rotate_around_y(dt * pi, False)
 
-        self.earth.rotate_around_y(dt, False)
-        self.earth.rotate_around_y(dt)
-        self.earth.render()
+        self.sun.render()
+        self.planet1.render()
+        self.moon.render()
