@@ -1,6 +1,5 @@
 from camera import Camera
 from program import Program
-import numpy as np
 from OpenGL.GL import *
 from sphere import generateSphere
 from scene_object import SceneObject
@@ -11,6 +10,10 @@ class SolarSystem(Program):
     PROGRAM_NAME = 'Solar System'
     VERTEX_SHADER_FILE = 'solar-system-vs.glsl'
     FRAGMENT_SHADER_FILE = 'solar-system-fs.glsl'
+    MODEL_MATRIX_UNIFORM = 'modelMatrix'
+    PROJECTION_VIEW_MATRIX_UNIFORM = 'projectionViewMatrix'
+    POSITION_VARIABLE = 'position'
+    COLOR_VARIABLE = 'vertexColor'
 
 
     def __init__(self):
@@ -20,13 +23,13 @@ class SolarSystem(Program):
     def initialize_scene(self):
         sphere_positions = generateSphere()
 
-        self.sun = SceneObject(self.program, 'modelMatrix', 'position', sphere_positions, 'vertexColor', [1.0, 1.0, 0.0] * len(sphere_positions))
+        self.sun = SceneObject(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, sphere_positions, self.COLOR_VARIABLE, [1.0, 1.0, 0.0] * len(sphere_positions))
         self.sun.scale(3)
 
-        self.earth = SceneObject(self.program, 'modelMatrix', 'position', sphere_positions, 'vertexColor', [0.0, 0.0, 1.0] * len(sphere_positions))
+        self.earth = SceneObject(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, sphere_positions, self.COLOR_VARIABLE, [0.0, 0.0, 1.0] * len(sphere_positions))
         self.earth.translate(-6, 0, 0)
 
-        camera = Camera(self.program, 'projectionViewMatrix')
+        camera = Camera(self.program, self.PROJECTION_VIEW_MATRIX_UNIFORM)
         camera.rotate_around_x(-pi / 4)
         camera.translate(0, 10, 10)
         camera.activate()
