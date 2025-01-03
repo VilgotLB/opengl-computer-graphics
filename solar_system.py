@@ -28,7 +28,7 @@ class SolarSystem(Program):
 
         camera = Camera(self.program, self.PROJECTION_VIEW_MATRIX_UNIFORM)
         camera.rotate_around_x(-pi / 4)
-        camera.translate(0, 10, 10)
+        camera.translate(0, 10, 10, False)
         camera.activate()
 
         glEnable(GL_CULL_FACE)
@@ -41,5 +41,6 @@ class SolarSystem(Program):
         self.sun.rotate_around_y(-dt)
         self.sun.render()
 
+        self.earth.rotate_around_y(dt, False)
         self.earth.rotate_around_y(dt)
         self.earth.render()
