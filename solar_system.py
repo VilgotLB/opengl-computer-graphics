@@ -1,8 +1,7 @@
 from camera import Camera
 from program import Program
 from OpenGL.GL import *
-from sphere import generateSphere
-from scene_object import SceneObject
+from celestial_body import CelestialBody
 from math import pi
 
 class SolarSystem(Program):
@@ -21,12 +20,10 @@ class SolarSystem(Program):
 
 
     def initialize_scene(self):
-        sphere_positions = generateSphere()
-
-        self.sun = SceneObject(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, sphere_positions, self.COLOR_VARIABLE, [1.0, 1.0, 0.0] * len(sphere_positions))
+        self.sun = CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, [1.0, 1.0, 0.0])
         self.sun.scale(3)
 
-        self.earth = SceneObject(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, sphere_positions, self.COLOR_VARIABLE, [0.0, 0.0, 1.0] * len(sphere_positions))
+        self.earth = CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, [0.0, 0.0, 1.0])
         self.earth.translate(-6, 0, 0)
 
         camera = Camera(self.program, self.PROJECTION_VIEW_MATRIX_UNIFORM)
