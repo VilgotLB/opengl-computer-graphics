@@ -10,8 +10,10 @@ class SolarSystem(Program):
     VERTEX_SHADER_FILE = 'solar-system-vs.glsl'
     FRAGMENT_SHADER_FILE = 'solar-system-fs.glsl'
     MODEL_MATRIX_UNIFORM = 'modelMatrix'
-    IS_SUN_UNIFORM = 'isSun'
     PROJECTION_VIEW_MATRIX_UNIFORM = 'projectionViewMatrix'
+    IS_SUN_UNIFORM = 'isSun'
+    GLOSSINESS_UNIFORM = 'glossiness'
+    CAMERA_POSITION_UNIFORM = 'cameraPosition'
     POSITION_VARIABLE = 'position'
     COLOR_VARIABLE = 'vertexColor'
 
@@ -21,26 +23,26 @@ class SolarSystem(Program):
 
 
     def initialize_scene(self):
-        self.sun = self.create_celestial_body([1.0, 1.0, 0.0], True)
+        self.sun = self.create_celestial_body([1.0, 1.0, 0.0], 0, True)
         self.sun.scale(3)
 
-        self.planet1 = self.create_celestial_body([0.6, 0.0, 0.0])
+        self.planet1 = self.create_celestial_body([0.6, 0.0, 0.0], 80)
         self.planet1.scale(1/5)
         self.planet1.translate(-1.5, 0, 0, False)
 
-        self.planet2 = self.create_celestial_body([0.2, 0.4, 0.2])
+        self.planet2 = self.create_celestial_body([0.2, 0.4, 0.2], 10)
         self.planet2.scale(1/3)
         self.planet2.translate(-2.5, 0, 0, False)
 
-        self.planet3 = self.create_celestial_body([0.2, 0.2, 1.0])
+        self.planet3 = self.create_celestial_body([0.2, 0.2, 1.0], 30)
         self.planet3.scale(1/4)
         self.planet3.translate(-4, 0, 0, False)
 
-        self.moon = self.create_celestial_body([0.5, 0.5, 0.5])
+        self.moon = self.create_celestial_body([0.5, 0.5, 0.5], 5)
         self.moon.scale(1/2)
         self.moon.translate(-3, 0, 0, False)
 
-        self.planet4 = self.create_celestial_body([0.8, 0.2, 0.8])
+        self.planet4 = self.create_celestial_body([0.8, 0.2, 0.8], 100)
         self.planet4.scale(2/5)
         self.planet4.translate(-6, 0, 0, False)
 
@@ -50,9 +52,9 @@ class SolarSystem(Program):
         self.planet3.add_child(self.moon)
         self.sun.add_child(self.planet4)
         
-        camera = Camera(self.program, self.PROJECTION_VIEW_MATRIX_UNIFORM)
-        camera.rotate_around_x(-pi / 6)
-        camera.translate(0, 18, 32, False)
+        camera = Camera(self.program, self.PROJECTION_VIEW_MATRIX_UNIFORM, self.CAMERA_POSITION_UNIFORM)
+        camera.translate(0, 0, 35)
+        camera.rotate_around_x(-pi / 4, False)
         camera.activate()
 
         glEnable(GL_CULL_FACE)
@@ -85,5 +87,5 @@ class SolarSystem(Program):
         self.planet4.render()
     
 
-    def create_celestial_body(self, color, is_sun=False):
-        return CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.IS_SUN_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, color, is_sun)
+    def create_celestial_body(self, color, glossiness, is_sun=False):
+        return CelestialBody(self.program, self.MODEL_MATRIX_UNIFORM, self.GLOSSINESS_UNIFORM, self.IS_SUN_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, color, glossiness, is_sun)

@@ -1,11 +1,13 @@
 uniform mat4 projectionViewMatrix;
 uniform mat4 modelMatrix;
+uniform vec3 cameraPosition;
 
 in vec3 position;
 in vec3 vertexColor;
 
 out vec3 normal;
 out vec3 sunDirection;
+out vec3 cameraDirection;
 out vec3 color;
 
 void main() {
@@ -19,5 +21,6 @@ void main() {
 
     normal = rotationMatrix * position.xyz;
     sunDirection = normalize(-worldPosition.xyz);
+    cameraDirection = normalize(cameraPosition - worldPosition.xyz);
     color = vertexColor;
 }

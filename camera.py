@@ -5,9 +5,10 @@ from math import tan, pi
 
 class Camera(SceneEntity):
 
-    def __init__(self, program_reference, projection_view_matrix_uniform):
+    def __init__(self, program_reference, projection_view_matrix_uniform, camera_position_uniform):
         super().__init__()
-        self.projectionViewMatrix_reference = glGetUniformLocation(program_reference, projection_view_matrix_uniform)
+        self.projection_view_matrix_reference = glGetUniformLocation(program_reference, projection_view_matrix_uniform)
+        self.camera_position_reference = glGetUniformLocation(program_reference, camera_position_uniform)
     
 
     def get_view_matrix(self):
@@ -24,8 +25,10 @@ class Camera(SceneEntity):
                          [0, d, 0, 0],
                          [0, 0, b, c],
                          [0, 0, -1, 0]]).astype(np.float32)
-    
+
 
     def activate(self):
         projection_view_matrix = self.get_projection_matrix() @ self.get_view_matrix()
-        glUniformMatrix4fv(self.projectionViewMatrix_reference, 1, GL_TRUE, projection_view_matrix)
+        glUniformMatrix4fv(self.projection_view_matrix_reference, 1, GL_TRUE, projection_view_matrix)
+        world_position = self.get_world_position()
+        glUniform3f(self.camera_position_reference, world_position[0], world_position[1], world_position[2])

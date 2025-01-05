@@ -25,6 +25,14 @@ class SceneEntity(object):
         return self.parent.get_world_matrix() @ self.model_matrix
     
 
+    def get_world_position(self):
+        world_matrix = self.get_world_matrix()
+        x = world_matrix[0][3]
+        y = world_matrix[1][3]
+        z = world_matrix[2][3]
+        return [x, y, z]
+    
+
     def transform(self, matrix, locally=True):
         if locally:
             self.model_matrix = self.model_matrix @ matrix
