@@ -7,15 +7,16 @@ class SceneObject(SceneEntity):
     def __init__(self, program_reference, model_matrix_uniform, position_variable_name, positions, color_variable_name, colors):
         super().__init__()
 
+        self.program = program_reference
         self.number_of_vertices = len(positions)
 
         self.vao = glGenVertexArrays(1)
         glBindVertexArray(self.vao)
 
-        self.store_vertex_attribute(program_reference, position_variable_name, positions)
-        self.store_vertex_attribute(program_reference, color_variable_name, colors)
+        self.store_vertex_attribute(self.program, position_variable_name, positions)
+        self.store_vertex_attribute(self.program, color_variable_name, colors)
 
-        self.modelMatrix_reference = glGetUniformLocation(program_reference, model_matrix_uniform)
+        self.modelMatrix_reference = glGetUniformLocation(self.program, model_matrix_uniform)
     
 
     def store_vertex_attribute(self, program, variable_name, data):
