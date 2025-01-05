@@ -1,14 +1,14 @@
-from camera import Camera
-from program import Program
+from solar_system.camera import Camera
+from common.program import Program
 from OpenGL.GL import *
-from celestial_body import CelestialBody
+from solar_system.celestial_body import CelestialBody
 from math import pi
 
 class SolarSystem(Program):
 
     PROGRAM_NAME = 'Solar System'
-    VERTEX_SHADER_FILE = 'solar-system-vs.glsl'
-    FRAGMENT_SHADER_FILE = 'solar-system-fs.glsl'
+    VERTEX_SHADER_FILE = 'solar_system/solar-system-vs.glsl'
+    FRAGMENT_SHADER_FILE = 'solar_system/solar-system-fs.glsl'
     MODEL_MATRIX_UNIFORM = 'modelMatrix'
     PROJECTION_VIEW_MATRIX_UNIFORM = 'projectionViewMatrix'
     IS_SUN_UNIFORM = 'isSun'

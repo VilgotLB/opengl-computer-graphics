@@ -1,4 +1,4 @@
-from scene_entity import SceneEntity
+from common.scene_entity import SceneEntity
 from OpenGL.GL import *
 import numpy as np
 from math import tan, pi

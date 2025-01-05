@@ -1,6 +1,6 @@
 import numpy as np
 from OpenGL.GL import *
-from scene_entity import SceneEntity
+from common.scene_entity import SceneEntity
 
 class SceneObject(SceneEntity):
 

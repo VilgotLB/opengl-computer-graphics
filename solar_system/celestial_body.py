@@ -1,6 +1,6 @@
 from OpenGL.GL import *
-from scene_object import SceneObject
-from sphere import generateSphere
+from common.scene_object import SceneObject
+from solar_system.sphere import generateSphere
 from math import sin, pi
 
 class CelestialBody(SceneObject):
