@@ -11,12 +11,17 @@ class Graph(SceneObject):
     def generate_positions(self, points):
         positions = []
         for point in points:
-            positions.append([point[0], point[1], 0.0])
+            half_length = 1.0
+            bottom_left = [point[0] - half_length, point[1] - half_length, 0.0]
+            bottom_right = [point[0] + half_length, point[1] - half_length, 0.0]
+            top_left = [point[0] - half_length, point[1] + half_length, 0.0]
+            top_right = [point[0] + half_length, point[1] + half_length, 0.0]
+            positions.extend([bottom_left, top_right, top_left, bottom_right, top_right, bottom_left])
         return positions
     
 
     def generate_colors(self, points):
         colors = []
         for point in points:
-            colors.append([1.0, 1.0, 0.0])
+            colors.append([1.0, 1.0, 0.0] * 6)
         return colors
