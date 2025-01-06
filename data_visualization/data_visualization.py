@@ -1,6 +1,5 @@
 from common.program import Program
 from data_visualization.graph import Graph
-from data_visualization.datapoints import createDatapoints
 
 class DataVisualization(Program):
 
@@ -16,8 +15,7 @@ class DataVisualization(Program):
 
 
     def initialize_scene(self):
-        points = createDatapoints()
-        self.graph = Graph(self.program, self.TRANSFORMATION_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE, points)
+        self.graph = Graph(self.program, self.TRANSFORMATION_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE)
         self.graph.scale(1/50)
         self.graph.translate(-20, -20, 0)
 
