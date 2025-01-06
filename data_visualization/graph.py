@@ -29,5 +29,8 @@ class Graph(SceneObject):
     def generate_colors(self, points):
         colors = []
         for point in points:
-            colors.append([1.0, 1.0, 0.0] * 6)
+            y = point[1]
+            blue = max(0.0, min(y/30, 1.0))
+            red = 1 - blue
+            colors.append([red, 0.0, blue] * 6)
         return colors
