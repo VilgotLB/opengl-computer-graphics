@@ -5,7 +5,7 @@ class Graph(SceneObject):
 
     def __init__(self, program_reference, transformation_uniform, position_variable_name, color_variable_name):
         points = createDatapoints()
-        print(points)
+        points = sorted(points, key=lambda point: point[-1], reverse=True)
         positions = self.generate_positions(points)
         colors = self.generate_colors(points)
         super().__init__(program_reference, transformation_uniform, position_variable_name, positions, color_variable_name, colors)
