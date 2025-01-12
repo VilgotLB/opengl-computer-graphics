@@ -1,12 +1,13 @@
 from common.program import Program
 from data_visualization.graph import Graph
+from common.scene_object import SceneObject
 
 class DataVisualization(Program):
 
     PROGRAM_NAME = 'Data Visualization'
-    VERTEX_SHADER_FILE = 'data_visualization/data-vis-vs.glsl'
-    FRAGMENT_SHADER_FILE = 'data_visualization/data-vis-fs.glsl'
-    TRANSFORMATION_UNIFORM = 'graphTransformation'
+    VERTEX_SHADER_FILE = 'data_visualization/test-vs.glsl'
+    FRAGMENT_SHADER_FILE = 'data_visualization/test-fs.glsl'
+    TRANSFORMATION_UNIFORM = 'transformation'
     POSITION_VARIABLE = 'position'
     COLOR_VARIABLE = 'vertexColor'
 
@@ -15,10 +16,10 @@ class DataVisualization(Program):
 
 
     def initialize_scene(self):
-        self.graph = Graph(self.program, self.TRANSFORMATION_UNIFORM, self.POSITION_VARIABLE, self.COLOR_VARIABLE)
-        self.graph.scale(1/50)
-        self.graph.translate(-20, -20, 0)
+        positions = [[-0.8, -0.8, 0.0], [0.8, -0.8, 0.0], [0.8, 0.8, 0.0], [-0.8, 0.8, 0.0]]
+        colors = [[1.0, 1.0, 0.0]]*4
+        self.shape = SceneObject(self.program, self.TRANSFORMATION_UNIFORM, self.POSITION_VARIABLE, positions, self.COLOR_VARIABLE, colors)
 
 
     def update_scene(self, dt, time):
-        self.graph.render()
+        self.shape.render()
