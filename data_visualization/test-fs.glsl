@@ -7,18 +7,18 @@ out vec4 fragColor;
 
 void main() {
     float outerRadius = radius;
-    float innerRadius = 0.01;
-    vec3 innerColor = vec3(0.0, 0.3, 0.0);
+    float innerRadius = radius / 4;
+    vec3 innerColor = vec3(1.0, 1.0, 0.0);
 
     float d = distance(fragPos, centerFragPos);
     
     float outerMask = step(d, outerRadius);
     float innerMask = step(d, innerRadius);
 
-    vec3 finalColor = outerMask * color;
+    vec4 finalColor = vec4(color, outerMask);
     if (innerMask > 0.0) {
-        finalColor = innerMask * innerColor;
+        finalColor = vec4(innerColor, innerMask);
     }
 
-    fragColor = vec4(finalColor, 1.0);
+    fragColor = finalColor;
 }
