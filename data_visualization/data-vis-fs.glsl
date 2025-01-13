@@ -1,6 +1,24 @@
 in vec3 color;
+in vec2 fragPos;
+in vec2 centerFragPos;
+in float radius;
+
 out vec4 fragColor;
 
 void main() {
-    fragColor = vec4(color, 1.0);
+    float outerRadius = radius;
+    float innerRadius = radius / 4;
+    vec3 innerColor = vec3(1.0, 1.0, 0.0);
+
+    float d = distance(fragPos, centerFragPos);
+    
+    float outerMask = step(d, outerRadius);
+    float innerMask = step(d, innerRadius);
+
+    vec4 finalColor = vec4(color, outerMask);
+    if (innerMask > 0.0) {
+        finalColor = vec4(innerColor, innerMask);
+    }
+
+    fragColor = finalColor;
 }

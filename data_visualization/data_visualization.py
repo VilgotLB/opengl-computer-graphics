@@ -6,8 +6,8 @@ from OpenGL.GL import *
 class DataVisualization(Program):
 
     PROGRAM_NAME = 'Data Visualization'
-    VERTEX_SHADER_FILE = 'data_visualization/test-vs.glsl'
-    FRAGMENT_SHADER_FILE = 'data_visualization/test-fs.glsl'
+    VERTEX_SHADER_FILE = 'data_visualization/data-vis-vs.glsl'
+    FRAGMENT_SHADER_FILE = 'data_visualization/data-vis-fs.glsl'
     TRANSFORMATION_UNIFORM = 'transformation'
     POSITION_VARIABLE = 'position'
     CENTER_VARIABLE = 'centerPos'
