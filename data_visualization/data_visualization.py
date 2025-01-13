@@ -16,8 +16,8 @@ class DataVisualization(Program):
 
 
     def initialize_scene(self):
-        positions = [[-0.8, -0.8, 0.0], [0.8, -0.8, 0.0], [0.8, 0.8, 0.0], [-0.8, 0.8, 0.0]]
-        colors = [[1.0, 1.0, 0.0]]*4
+        positions = [[-0.8, -0.8, 0.0], [0.8, -0.8, 0.0], [-0.8, 0.8, 0.0], [0.8, -0.8, 0.0], [0.8, 0.8, 0.0], [-0.8, 0.8, 0.0]]
+        colors = [[1.0, 1.0, 0.0]]*6
         self.shape = SceneObject(self.program, self.TRANSFORMATION_UNIFORM, self.POSITION_VARIABLE, positions, self.COLOR_VARIABLE, colors)
 
 

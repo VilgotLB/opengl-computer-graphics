@@ -36,4 +36,4 @@ class SceneObject(SceneEntity):
 
         glUniformMatrix4fv(self.modelMatrix_reference, 1, GL_TRUE, self.get_world_matrix())
 
-        glDrawArrays(GL_QUADS, 0, self.number_of_vertices)
+        glDrawArrays(GL_TRIANGLES, 0, self.number_of_vertices)
