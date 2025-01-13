@@ -9,6 +9,7 @@ class DataVisualization(Program):
     FRAGMENT_SHADER_FILE = 'data_visualization/test-fs.glsl'
     TRANSFORMATION_UNIFORM = 'transformation'
     POSITION_VARIABLE = 'position'
+    CENTER_VARIABLE = 'centerPos'
     COLOR_VARIABLE = 'vertexColor'
 
     def __init__(self):
@@ -19,6 +20,10 @@ class DataVisualization(Program):
         positions = [[-0.8, -0.8, 0.0], [0.8, -0.8, 0.0], [-0.8, 0.8, 0.0], [0.8, -0.8, 0.0], [0.8, 0.8, 0.0], [-0.8, 0.8, 0.0]]
         colors = [[1.0, 1.0, 0.0]]*6
         self.shape = SceneObject(self.program, self.TRANSFORMATION_UNIFORM, self.POSITION_VARIABLE, positions, self.COLOR_VARIABLE, colors)
+        self.shape.store_vertex_attribute(self.program, self.CENTER_VARIABLE, [[0.0, 0.0, 0.0]]*6)
+
+        self.shape.scale(1/50)
+        self.shape.translate(15, 30, 0)
 
 
     def update_scene(self, dt, time):
