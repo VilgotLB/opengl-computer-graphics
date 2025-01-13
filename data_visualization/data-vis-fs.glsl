@@ -9,12 +9,13 @@ void main() {
     float outerRadius = radius;
     float innerRadius = radius / 4;
     vec3 innerColor = vec3(1.0, 1.0, 0.0);
-
-    float d = distance(fragPos, centerFragPos);
     
+    // Determine whether the fragment is within the outer or inner radius
+    float d = distance(fragPos, centerFragPos);
     float outerMask = step(d, outerRadius);
     float innerMask = step(d, innerRadius);
 
+    // Color depending on if it's part of the inner or outer circle
     vec4 finalColor = vec4(color, outerMask);
     if (innerMask > 0.0) {
         finalColor = vec4(innerColor, innerMask);
