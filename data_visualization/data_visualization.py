@@ -22,8 +22,8 @@ class DataVisualization(Program):
         self.shape = SceneObject(self.program, self.TRANSFORMATION_UNIFORM, self.POSITION_VARIABLE, positions, self.COLOR_VARIABLE, colors)
         self.shape.store_vertex_attribute(self.program, self.CENTER_VARIABLE, [[0.0, 0.0, 0.0]]*6)
 
-        self.shape.scale(1/50)
-        self.shape.translate(15, 30, 0)
+        self.shape.scale(1/10)
+        self.shape.translate(1, 2, 0)
 
 
     def update_scene(self, dt, time):

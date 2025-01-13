@@ -7,6 +7,9 @@ out vec4 fragColor;
 
 void main() {
     float d = distance(fragPos, centerFragPos);
-    float colorMask = step(d, radius);
-    fragColor = vec4(colorMask * color, 1.0);
+    
+    float circleMask = step(d, radius);
+    vec3 newColor = circleMask * color;
+
+    fragColor = vec4(circleMask * color, 1.0);
 }
